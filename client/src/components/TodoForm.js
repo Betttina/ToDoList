@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
 import { addTodo } from '../services/api';
+import PropTypes from 'prop-types';
+import './styles/_todoform.scss';
 
-function TodoForm(){
+function TodoForm({ onTodoAdded }){
     const [title, setTitle] = useState ('');
     const [description, setDescription ] = useState('');
 
@@ -19,7 +21,7 @@ function TodoForm(){
     const handleSubmit = async (e) => {
         e.preventDefault();
         const newTodo = await addTodo({ title, description });
-        onTodoAdded(newTodo); // Meddela TodoList att en ny to-do har lagts till
+        onTodoAdded(newTodo); // inform TodoList that new post have been added
         setTitle('');
         setDescription('');
     };
@@ -46,5 +48,10 @@ function TodoForm(){
         </form>
     )
 }
+
+
+TodoForm.propTypes = {
+    onTodoAdded: PropTypes.func.isRequired
+};
 
 export default TodoForm;

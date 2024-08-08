@@ -16,7 +16,9 @@ export default TodoItem;*/
 
 import React from 'react';
 import { deleteTodo, updateTodo } from '../services/api';
-import './styles/TodoItem.scss';
+/*
+import './styles/_todoitem.scss';
+*/
 
 function TodoItem({ todo }) {
     const handleDelete = async () => {
