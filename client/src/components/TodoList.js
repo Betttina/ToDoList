@@ -1,20 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import TodoItem from './TodoItem';
 import { getTodos } from '../services/api';
+import './styles/_todolist.scss';
 
-function TodoList() {
-    const [todos, setTodos] = useState([]);
+function TodoList({todos}) {
+    /*const [todos, setTodos] = useState([]);*/
 
     /*useEffect(() => {
         getTodos().then(data => setTodos(data));
     }, []);*/
 
-    useEffect(() => {
-        setTodos([
-            { _id: 1, title: 'Learn React', description: 'Learn the basics of React' },
-            { _id: 2, title: 'Build To-Do App', description: 'Create a to-do app using React' }
-        ]);
+    /*useEffect(() => {
+        fetchTodos();
+    }, []);*/
+
+
+    /*useEffect(() => {
+        fetchTodos();
     }, []);
+
+    const fetchTodos = async () => {
+        const todos = await getTodos();
+        setTodos(todos);
+    };*/
 
     return (
         <div className="todo-list">

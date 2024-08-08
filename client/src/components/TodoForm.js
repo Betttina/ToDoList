@@ -3,17 +3,25 @@ import { addTodo } from '../services/api';
 
 function TodoForm(){
     const [title, setTitle] = useState ('');
-    const [description, setDescripton ] = useState('');
+    const [description, setDescription ] = useState('');
 
-    const handleSubmit = (e) => {
+    /*const handleSubmit = (e) => {
         e.preventDefault();
         addTodo({
             title, description,
             completed: false,
         }).then(() => {
             setTitle('');
-            setDescripton('');
+            setDescription('');
         })
+    };*/
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        const newTodo = await addTodo({ title, description });
+        onTodoAdded(newTodo); // Meddela TodoList att en ny to-do har lagts till
+        setTitle('');
+        setDescription('');
     };
 
     return (
@@ -28,7 +36,7 @@ function TodoForm(){
 
             <textarea
                 value={description}
-                onChange={(e) => setDescripton(e.target.value)}
+                onChange={(e) => setDescription(e.target.value)}
                 placeholder="Description"
                 required
                 />
