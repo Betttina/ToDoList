@@ -1,7 +1,7 @@
 /* App.scss */
 
 /* Importera variabler */
-@import './components/styles/_variables.scss';
+@import 'components/styles/variables';
 
 /* Grundläggande globala stilar */
 body {
@@ -19,8 +19,8 @@ p {
 }
 
 /* Importera komponent-specifika stilar */
-@import './components/styles/_header.scss';
-@import './components/styles/TodoForm';
-@import './components/styles/TodoList';
+@import 'components/styles/header';
+@import 'components/styles/todoform';
+@import 'components/styles/todolist';
 /*@import './components/styles/TodoItem';
 @import './components/styles/Footer';*/
