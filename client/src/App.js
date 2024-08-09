@@ -5,7 +5,7 @@ import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import Footer from './components/Footer';
 import './App.scss';
-import { getTodos, deleteTodo as deleteTodoApi, updateTodo as updateTodoApi } from './services/api';
+import { getTodos, addTodo, deleteTodo as deleteTodoApi, updateTodo as updateTodoApi } from './services/api';
 
 
 function App() {
@@ -21,7 +21,13 @@ function App() {
         setTodos(todos);
     };
 
-    const handleTodoAdded = (newTodo) => {
+    /*const handleTodoAdded = (newTodo) => {
+        setTodos(prevTodos => [...prevTodos, newTodo]);
+    };*/
+
+    const handleTodoAdded = async (newTodoData) => {
+        const newTodo = await addTodo(newTodoData); // Lägg till to-do och få tillbaka den från servern
+        console.log('New Todo:', newTodo);
         setTodos(prevTodos => [...prevTodos, newTodo]);
     };
 
@@ -44,7 +50,11 @@ function App() {
 
     const handleUpdateTodo = async (id) => {
         const todoToUpdate = todos.find(todo => todo._id === id);
+        console.log('Updating todo:', todoToUpdate);
+
         const updatedTodo = await updateTodoApi(id, { ...todoToUpdate, completed: !todoToUpdate.completed });
+        console.log('Updated todo from API:', updatedTodo);
+
         setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodo : todo));
     };
 

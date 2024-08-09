@@ -21,7 +21,8 @@ router.route('/add').post((req, res) => {
     });
 
     newTodo.save()
-        .then(() => res.json('To-Do added!'))
+        /*.then(() => res.json('To-Do added!'))*/
+        .then(savedTodo => res.json(savedTodo)) // Returnera den nyligen skapade to-do-posten
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
@@ -39,8 +40,8 @@ router.route('/:id').delete((req, res) => {
         .catch(err => res.status(400).json('Error: ' + err));
 });
 
-// update spec post
-router.route('/update/:id').post((req, res) => {
+// update spec post based on id
+/*router.route('/update/:id').put((req, res) => {
     Todo.findById(req.params.id)
         .then(todo => {
             todo.title = req.body.title;
@@ -48,10 +49,18 @@ router.route('/update/:id').post((req, res) => {
             todo.completed = req.body.completed;
 
             todo.save()
-                .then(() => res.json('To-Do updated!'))
+                /!*.then(() => res.json('To-Do updated!'))*!/
+                .then(updatedTodo => res.json(updatedTodo)) // return object
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
+});*/
+
+router.route('/update/:id').put((req, res) => {
+    Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
+        .then(updatedTodo => res.json(updatedTodo))
+        .catch(err => res.status(400).json('Error: ' + err));
 });
+
 
 module.exports = router;

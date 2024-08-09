@@ -16,7 +16,7 @@ export const addTodo = async (todo) => {
         body:JSON.stringify(todo),
     });
 
-    return await response.json();
+    return await response.json(); // return the recently made todo-post
 };
 
 // delete
@@ -28,13 +28,13 @@ export const deleteTodo = async (id) => {
 };
 
 // update
-export const updateTodo = async (id, todo) => {
+export const updateTodo = async (id, updatedTodo) => {
     const response = await fetch(`${API_URL}/update/${id}`, {
-        method: 'POST',
+        method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(todo),
+        body: JSON.stringify(updatedTodo),
     });
     return await response.json();
 };
