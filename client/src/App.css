@@ -21,11 +21,31 @@ header {
   background-color: #1976d2;
 }
 
-.todo-form {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  margin: 20px;
+.todo-form-container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 2rem;
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+.todo-form-container .MuiTextField-root {
+  margin-bottom: 1rem;
+}
+.todo-form-container .MuiButton-root {
+  background-color: #365F62;
+  color: #ffffff;
+  width: 100%;
+  padding: 0.75rem;
+  font-weight: bold;
+}
+.todo-form-container .MuiButton-root:hover {
+  background-color: #243f41;
+}
+@media (max-width: 600px) {
+  .todo-form-container {
+    padding: 1rem;
+  }
 }
 
 /*@import './components/styles/TodoItem';
