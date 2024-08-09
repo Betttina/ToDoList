@@ -20,8 +20,8 @@ function TodoForm({ onTodoAdded }){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const newTodo = await addTodo({ title, description });
-        onTodoAdded(newTodo); // inform TodoList that new post have been added
+        const newTodo = await addTodo({ title, description, completed: false });
+        onTodoAdded(newTodo); // inform App that new post have been added
         setTitle('');
         setDescription('');
     };

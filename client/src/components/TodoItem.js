@@ -15,12 +15,11 @@ export default TodoItem;*/
 
 
 import React from 'react';
-import { deleteTodo, updateTodo } from '../services/api';
-/*
+/*import { deleteTodo, updateTodo } from '../services/api';*/
 import './styles/_todoitem.scss';
-*/
 
-function TodoItem({ todo }) {
+
+/*function TodoItem({ todo }) {
     const handleDelete = async () => {
         await deleteTodo(todo._id);
         // Uppdatera listan efter radering om nödvändigt
@@ -29,6 +28,48 @@ function TodoItem({ todo }) {
     const handleToggleComplete = async () => {
         await updateTodo(todo._id, { ...todo, completed: !todo.completed });
         // Uppdatera listan efter uppdatering om nödvändigt
+    };
+
+    return (
+        <div className="todo-item">
+            <h2 className={`todo-title ${todo.completed ? 'completed' : ''}`}>
+                {todo.title}
+            </h2>
+            <p>{todo.description}</p>
+            <div className="todo-actions">
+                <button onClick={handleToggleComplete}>
+                    {todo.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
+                </button>
+                <button onClick={handleDelete}>Delete</button>
+            </div>
+        </div>
+    );
+}*/
+
+/*function TodoItem({ todo, deleteTodo, updateTodo }) {
+    return (
+        <div className="todo-item">
+            <h2 className={`todo-title ${todo.completed ? 'completed' : ''}`}>
+                {todo.title}
+            </h2>
+            <p>{todo.description}</p>
+            <div className="todo-actions">
+                <button onClick={() => updateTodo(todo._id)}>
+                    {todo.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
+                </button>
+                <button onClick={() => deleteTodo(todo._id)}>Delete</button>
+            </div>
+        </div>
+    );
+}*/
+
+function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
+    const handleToggleComplete = () => {
+        onUpdateTodo(todo._id);
+    };
+
+    const handleDelete = () => {
+        onDeleteTodo(todo._id);
     };
 
     return (

@@ -5,7 +5,8 @@ import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import Footer from './components/Footer';
 import './App.scss';
-import { getTodos } from './services/api';
+import { getTodos, deleteTodo as deleteTodoApi, updateTodo as updateTodoApi } from './services/api';
+
 
 function App() {
     console.log("Rendering App");
@@ -24,12 +25,39 @@ function App() {
         setTodos(prevTodos => [...prevTodos, newTodo]);
     };
 
+    const handleToggleComplete = async (id) => {
+        const todoToUpdate = todos.find(todo => todo._id === id);
+        const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
+        // Uppdatera todo i backend och sedan i state
+        setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodo : todo));
+    };
+
+    /*const handleDelete = async (id) => {
+        // Radera todo från backend och sedan från state
+        setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
+    };*/
+
+    const handleDeleteTodo = async (id) => {
+        await deleteTodoApi(id);
+        setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
+    };
+
+    const handleUpdateTodo = async (id) => {
+        const todoToUpdate = todos.find(todo => todo._id === id);
+        const updatedTodo = await updateTodoApi(id, { ...todoToUpdate, completed: !todoToUpdate.completed });
+        setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodo : todo));
+    };
+
     return (
 
         <div className="App">
             <Header />
             <TodoForm onTodoAdded={handleTodoAdded} />
-            <TodoList todos={todos} />
+            <TodoList
+                todos={todos}
+                onToggleComplete={handleToggleComplete}
+                onDeleteTodo={handleDeleteTodo}
+                onUpdateTodo={handleUpdateTodo}  />
             <Footer />
         </div>
     );
