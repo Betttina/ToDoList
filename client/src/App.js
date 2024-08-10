@@ -21,9 +21,6 @@ function App() {
         setTodos(todos);
     };
 
-    /*const handleTodoAdded = (newTodo) => {
-        setTodos(prevTodos => [...prevTodos, newTodo]);
-    };*/
 
     const handleTodoAdded = async (newTodoData) => {
         const newTodo = await addTodo(newTodoData); // Lägg till to-do och få tillbaka den från servern
@@ -38,10 +35,6 @@ function App() {
         setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodo : todo));
     };
 
-    /*const handleDelete = async (id) => {
-        // Radera todo från backend och sedan från state
-        setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
-    };*/
 
     const handleDeleteTodo = async (id) => {
         await deleteTodoApi(id);

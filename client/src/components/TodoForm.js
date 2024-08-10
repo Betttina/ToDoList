@@ -11,16 +11,6 @@ function TodoForm({ onTodoAdded }){
     const [title, setTitle] = useState ('');
     const [description, setDescription ] = useState('');
 
-
-
-    /*const handleSubmit = async (e) => {
-        e.preventDefault();
-        const newTodo = await addTodo({ title, description, completed: false });
-        onTodoAdded(newTodo); // inform App that new post have been added
-        setTitle('');
-        setDescription('');
-    };*/
-
     const handleSubmit = async (e) => {
         e.preventDefault();
 

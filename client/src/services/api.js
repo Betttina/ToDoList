@@ -6,19 +6,6 @@ export const getTodos = async () => {
     return await response.json();
 };
 
-// add
-/*export const addTodo = async (todo) => {
-    const response = await fetch (`${API_URL}/add`, {
-        method: "POST",
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body:JSON.stringify(todo),
-    });
-
-    return await response.json(); // return the recently made todo-post
-};*/
-
 export const addTodo = async (todo) => {
     try {
         const response = await fetch(`${API_URL}/add`, {
