@@ -1,22 +1,9 @@
-/*import React from 'react';
-
-function TodoItem({ todo }) {
-    return (
-        <div>
-            <h2>{todo.title}</h2>
-            <p>{todo.description}</p>
-            <button>Edit</button>
-            <button>Delete</button>
-        </div>
-    );
-}
-
-export default TodoItem;*/
-
-
 import React from 'react';
 import './styles/_todoitem.scss';
 import { formatDateToStockholm } from '../utils/dateUtils';
+import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import DeleteIcon from '@mui/icons-material/Delete';
+import Tooltip from '@mui/material/Tooltip';
 
 function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
     const handleToggleComplete = () => {
@@ -27,9 +14,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         onDeleteTodo(todo._id);
     };
 
-    //DateTimeFormat
     const formattedDate = formatDateToStockholm(todo.createdAt);
-
 
     return (
         <div className="todo-item">
@@ -40,9 +25,14 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
             <p>Skapad: {formattedDate}</p>
             <div className="todo-actions">
                 <button onClick={handleToggleComplete}>
+                    <CheckCircleIcon className="check-icon" />
                     {todo.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
                 </button>
-                <button onClick={handleDelete}>Delete</button>
+                <Tooltip title="Ta bort uppgift" arrow>
+                <button className="delete-button" onClick={handleDelete}>
+                    <DeleteIcon className="delete-icon" />
+                </button>
+                </Tooltip>
             </div>
         </div>
     );

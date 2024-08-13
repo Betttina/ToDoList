@@ -1,5 +1,6 @@
 // App.js
 import React, { useState, useEffect } from 'react';
+import { BrowserRouter as Router, Route, Routes,  Link } from 'react-router-dom';
 import Header from './components/Header';
 import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
@@ -52,8 +53,20 @@ function App() {
     };
 
     return (
-
+        <Router>
         <div className="App">
+            <nav>
+                <ul>
+                    <li><Link to="/active">Aktiva</Link></li>
+                    <li><Link to="/completed">Klara</Link></li>
+                    <li><Link to="/">Alla</Link></li>
+                </ul>
+            </nav>
+            <Routes>
+                <Route path="/active" element={<TodoList filter="active" />} />
+                <Route path="/completed" element={<TodoList filter="completed" />} />
+                <Route path="/" element={<TodoList filter="all" />} />
+            </Routes>
             <Header />
             <TodoForm onTodoAdded={handleTodoAdded} />
             <TodoList
@@ -63,6 +76,7 @@ function App() {
                 onUpdateTodo={handleUpdateTodo}  />
             <Footer />
         </div>
+        </Router>
     );
 }
 
