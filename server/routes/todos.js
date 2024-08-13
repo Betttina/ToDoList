@@ -41,7 +41,7 @@ router.route('/:id').delete((req, res) => {
 });
 
 // update spec post based on id
-/*router.route('/update/:id').put((req, res) => {
+router.route('/update/:id').put((req, res) => {
     Todo.findById(req.params.id)
         .then(todo => {
             todo.title = req.body.title;
@@ -49,18 +49,18 @@ router.route('/:id').delete((req, res) => {
             todo.completed = req.body.completed;
 
             todo.save()
-                /!*.then(() => res.json('To-Do updated!'))*!/
+                .then(() => res.json('To-Do updated!'))
                 .then(updatedTodo => res.json(updatedTodo)) // return object
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
-});*/
+});
 
-router.route('/update/:id').put((req, res) => {
+/*router.route('/update/:id').put((req, res) => {
     Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
         .then(updatedTodo => res.json(updatedTodo))
         .catch(err => res.status(400).json('Error: ' + err));
-});
+});*/
 
 
 module.exports = router;

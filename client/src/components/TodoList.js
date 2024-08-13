@@ -7,13 +7,13 @@ function TodoList({ todos = [], filter, onDeleteTodo, onUpdateTodo }) {
 
     switch (filter) {
         case 'active':
-            filteredTodos = todos.filter(todo => !todo.completed);
+            filteredTodos = todos.filter(todo => !todo.completed); // not done
             break;
         case 'completed':
-            filteredTodos = todos.filter(todo => todo.completed);
+            filteredTodos = todos.filter(todo => todo.completed); // done posts
             break;
         default:
-            filteredTodos = todos;
+            filteredTodos = todos; // display all
             break;
     }
 

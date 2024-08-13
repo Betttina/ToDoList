@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './styles/_todoitem.scss';
 import { formatDateToStockholm } from '../utils/dateUtils';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
@@ -6,8 +6,17 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 
 function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
-    const handleToggleComplete = () => {
+
+    const [fadingOut, setFadingOut] = useState(false);
+    /*const handleToggleComplete = () => {
         onUpdateTodo(todo._id);
+    };*/
+
+    const handleToggleComplete = () => {
+        setFadingOut(true); // start anim
+        setTimeout(() => { // delays to do-status until anim is done
+            onUpdateTodo(todo._id, { completed: !todo.completed }); // update completed status
+        }, 500); // match this time with css-anim
     };
 
     const handleDelete = () => {
@@ -17,7 +26,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
     const formattedDate = formatDateToStockholm(todo.createdAt);
 
     return (
-        <div className="todo-item">
+        <div className={`todo-item ${fadingOut ? 'fade-out' : ''}`}>
             <h2 className={`todo-title ${todo.completed ? 'completed' : ''}`}>
                 {todo.title}
             </h2>

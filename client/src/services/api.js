@@ -38,16 +38,23 @@ export const deleteTodo = async (id) => {
     return await response.json();
 };
 
-// update
-export const updateTodo = async (id, updatedTodo) => {
+// UPDATE ITEM BASED ON ID
+export const updateTodo = async (id, updates) => {
+    // updates (object) contains the new values for completed: true/false.
     const response = await fetch(`${API_URL}/update/${id}`, {
         method: 'PUT',
         headers: {
             'Content-Type': 'application/json',
         },
-        body: JSON.stringify(updatedTodo),
+        body: JSON.stringify(updates),
     });
-    return await response.json();
+
+    if (!response.ok){
+        throw new Error('Failed to update the todo');
+    }
+
+    const updatedTodo = await response.json(); //return the updated post
+    return updatedTodo;
 };
 
 

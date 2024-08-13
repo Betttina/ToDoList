@@ -6,7 +6,13 @@ import TodoList from './components/TodoList';
 import TodoForm from './components/TodoForm';
 import Footer from './components/Footer';
 import './App.scss';
-import { getTodos, addTodo, deleteTodo as deleteTodoApi, updateTodo as updateTodoApi } from './services/api';
+import {
+    getTodos,
+    addTodo,
+    deleteTodo as deleteTodoApi,
+    /*updateTodo as updateTodoApi,*/
+    updateTodo
+} from './services/api';
 
 
 function App() {
@@ -17,11 +23,10 @@ function App() {
         fetchTodos();
     }, []);
 
-    const fetchTodos = async () => {
+    /*const fetchTodos = async () => {
         const todos = await getTodos();
         setTodos(todos);
-    };
-
+    };*/
 
     const handleTodoAdded = async (newTodoData) => {
         const newTodo = await addTodo(newTodoData); // Lägg till to-do och få tillbaka den från servern
@@ -36,13 +41,12 @@ function App() {
         setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodo : todo));
     };
 
-
     const handleDeleteTodo = async (id) => {
         await deleteTodoApi(id);
         setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
     };
 
-    const handleUpdateTodo = async (id) => {
+    /*const handleUpdateTodo = async (id) => {
         const todoToUpdate = todos.find(todo => todo._id === id);
         console.log('Updating todo:', todoToUpdate);
 
@@ -50,6 +54,30 @@ function App() {
         console.log('Updated todo from API:', updatedTodo);
 
         setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodo : todo));
+    };*/
+
+    const fetchTodos = async () => {
+        const todosFromServer = await getTodos();
+        setTodos(todosFromServer);
+    };
+
+   /* const handleUpdateTodo = async (id, updates) => {
+        const updatedTodo = await updateTodo(id, updates);
+        setTodos(prevTodos =>
+            prevTodos.map(todo =>
+                todo._id === id ? { ...todo, completed: updatedTodo.completed } : todo
+            )
+        );
+    };*/
+
+    const handleUpdateTodo = async (id, updates) => {
+        // gets id and new updates => send to api -> updateTodo
+        const updatedTodo = await updateTodo(id, updates);
+        setTodos(prevTodos =>
+            prevTodos.map(todo =>
+                todo._id === id ? updatedTodo : todo // Uppdatera state med den uppdaterade to-do-posten
+            )
+        );
     };
 
     return (
