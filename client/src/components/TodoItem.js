@@ -16,6 +16,7 @@ export default TodoItem;*/
 
 import React from 'react';
 import './styles/_todoitem.scss';
+import { formatDateToStockholm } from '../utils/dateUtils';
 
 function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
     const handleToggleComplete = () => {
@@ -26,12 +27,17 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         onDeleteTodo(todo._id);
     };
 
+    //DateTimeFormat
+    const formattedDate = formatDateToStockholm(todo.createdAt);
+
+
     return (
         <div className="todo-item">
             <h2 className={`todo-title ${todo.completed ? 'completed' : ''}`}>
                 {todo.title}
             </h2>
             <p>{todo.description}</p>
+            <p>Skapad: {formattedDate}</p>
             <div className="todo-actions">
                 <button onClick={handleToggleComplete}>
                     {todo.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
