@@ -13,6 +13,8 @@ const uri = 'mongodb://localhost:27017/todolist';
 mongoose.connect(uri);
 
 const connection = mongoose.connection;
+mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+
 connection.once('open', () => {
     console.log('MongoDB database connection established successfully');
 });

@@ -70,7 +70,7 @@ function App() {
         );
     };*/
 
-    const handleUpdateTodo = async (id, updates) => {
+    /*const handleUpdateTodo = async (id, updates) => {
         // gets id and new updates => send to api -> updateTodo
         const updatedTodo = await updateTodo(id, updates);
         setTodos(prevTodos =>
@@ -78,6 +78,19 @@ function App() {
                 todo._id === id ? updatedTodo : todo // Uppdatera state med den uppdaterade to-do-posten
             )
         );
+    };*/
+
+    const handleUpdateTodo = async (id, updates) => {
+        try {
+            const updatedTodo = await updateTodo(id, updates);
+            setTodos(prevTodos =>
+                prevTodos.map(todo =>
+                    todo._id === id ? updatedTodo : todo // Uppdatera state med den uppdaterade to-do-posten
+                )
+            );
+        } catch (error) {
+            console.error('Failed to update the todo:', error);
+        }
     };
 
     return (

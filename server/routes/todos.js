@@ -1,5 +1,5 @@
 const router = require('express').Router();
-let Todo = require('../models/todo.model');
+const Todo = require('../models/todo.model');
 
 // get all posts
 router.route('/').get((req, res) => {
@@ -41,26 +41,54 @@ router.route('/:id').delete((req, res) => {
 });
 
 // update spec post based on id
-router.route('/update/:id').put((req, res) => {
+/*router.route('/update/:id').post((req, res) => {
     Todo.findById(req.params.id)
+        // checks if id is matched with the post
         .then(todo => {
             todo.title = req.body.title;
             todo.description = req.body.description;
             todo.completed = req.body.completed;
 
             todo.save()
-                .then(() => res.json('To-Do updated!'))
+                .then(() => res.json(todo))
+/!*
                 .then(updatedTodo => res.json(updatedTodo)) // return object
+*!/
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));
-});
+});*/
 
 /*router.route('/update/:id').put((req, res) => {
     Todo.findByIdAndUpdate(req.params.id, req.body, { new: true })
         .then(updatedTodo => res.json(updatedTodo))
         .catch(err => res.status(400).json('Error: ' + err));
 });*/
+
+// Route för att uppdatera en to-do baserat på dess ID
+router.post('/update/:id', (req, res) => {
+    console.log('Received POST request to update todo with ID:', req.params.id);
+    Todo.findById(req.params.id)
+        .then(todo => {
+            if (!todo) {
+                return res.status(404).json('Todo not found');
+            }
+
+            todo.completed = req.body.completed; // Uppdatera `completed`-fältet
+
+            // Lägg till andra fält som du vill uppdatera här om det behövs
+            todo.save()
+                .then(() => res.json(todo))
+                .catch(err => res.status(400).json('Error: ' + err));
+        })
+        .catch(err => res.status(400).json('Error: ' + err));
+});
+
+router.post('/update/:id', (req, res) => {
+    console.log('Simple update route hit');
+    res.json({ message: 'Update route hit successfully', id: req.params.id, updates: req.body });
+});
+
 
 
 module.exports = router;
