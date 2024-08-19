@@ -18,11 +18,11 @@ export const addTodo = async (todo) => {
 
         if (!response.ok) {
             console.error('Response status:', response.status);
-            console.error('Response text:', await response.text()); // Logga hela svaret
+            console.error('Response text:', await response.text());
             throw new Error(`HTTP error! status: ${response.status}`);
         }
 
-        return await response.json(); // Förväntar oss JSON tillbaka
+        return await response.json(); // expecting json back
     } catch (error) {
         console.error('API call failed:', error);
         throw error; // Kasta om felet för att hanteras i `handleSubmit`

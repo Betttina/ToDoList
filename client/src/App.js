@@ -19,14 +19,16 @@ function App() {
     console.log("Rendering App");
     const [todos, setTodos] = useState([]);
 
+
+    // get all todos when app is rendered
+    const fetchTodos = async () => {
+        const todosFromServer = await getTodos();
+        setTodos(todosFromServer);
+    };
     useEffect(() => {
         fetchTodos();
     }, []);
 
-    /*const fetchTodos = async () => {
-        const todos = await getTodos();
-        setTodos(todos);
-    };*/
 
     const handleTodoAdded = async (newTodoData) => {
         const newTodo = await addTodo(newTodoData); // Lägg till to-do och få tillbaka den från servern
@@ -46,46 +48,13 @@ function App() {
         setTodos(prevTodos => prevTodos.filter(todo => todo._id !== id));
     };
 
-    /*const handleUpdateTodo = async (id) => {
-        const todoToUpdate = todos.find(todo => todo._id === id);
-        console.log('Updating todo:', todoToUpdate);
-
-        const updatedTodo = await updateTodoApi(id, { ...todoToUpdate, completed: !todoToUpdate.completed });
-        console.log('Updated todo from API:', updatedTodo);
-
-        setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodo : todo));
-    };*/
-
-    const fetchTodos = async () => {
-        const todosFromServer = await getTodos();
-        setTodos(todosFromServer);
-    };
-
-   /* const handleUpdateTodo = async (id, updates) => {
-        const updatedTodo = await updateTodo(id, updates);
-        setTodos(prevTodos =>
-            prevTodos.map(todo =>
-                todo._id === id ? { ...todo, completed: updatedTodo.completed } : todo
-            )
-        );
-    };*/
-
-    /*const handleUpdateTodo = async (id, updates) => {
-        // gets id and new updates => send to api -> updateTodo
-        const updatedTodo = await updateTodo(id, updates);
-        setTodos(prevTodos =>
-            prevTodos.map(todo =>
-                todo._id === id ? updatedTodo : todo // Uppdatera state med den uppdaterade to-do-posten
-            )
-        );
-    };*/
 
     const handleUpdateTodo = async (id, updates) => {
         try {
             const updatedTodo = await updateTodo(id, updates);
             setTodos(prevTodos =>
                 prevTodos.map(todo =>
-                    todo._id === id ? updatedTodo : todo // Uppdatera state med den uppdaterade to-do-posten
+                    todo._id === id ? updatedTodo : todo // update state with the updated post
                 )
             );
         } catch (error) {
