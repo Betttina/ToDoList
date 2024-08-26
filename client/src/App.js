@@ -51,7 +51,7 @@ function App() {
 
     const handleUpdateTodo = async (id, updates) => {
         try {
-            const updatedTodo = await updateTodo(id, updates);
+            const updatedTodo = await updateTodo(id, updates); // calls api-func
             setTodos(prevTodos =>
                 prevTodos.map(todo =>
                     todo._id === id ? updatedTodo : todo // update state with the updated post
@@ -61,6 +61,8 @@ function App() {
             console.error('Failed to update the todo:', error);
         }
     };
+
+
 
     return (
         <Router>

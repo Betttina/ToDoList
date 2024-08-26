@@ -61,3 +61,29 @@ export const updateTodo = async (id, updates) => {
 };
 
 
+/*export const handleSave = async (id, updatedData) => {
+    try {
+        const response = await fetch(`http://localhost:5000/todos/update/${id}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedData),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update the todo');
+        }
+
+        const updatedTodo = await response.json();
+        // Uppdatera frontendens state med det nya värdet
+        setTodos(prevTodos =>
+            prevTodos.map(todo => todo._id === id ? updatedTodo : todo)
+        );
+    } catch (error) {
+        console.error(error);
+    }
+};*/
+
+
+

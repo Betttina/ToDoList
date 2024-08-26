@@ -67,18 +67,27 @@ router.route('/:id').delete((req, res) => {
 
 // Route för att uppdatera en to-do baserat på dess ID
 router.post('/update/:id', (req, res) => {
+
     console.log('Received POST request to update todo with ID:', req.params.id);
+    const { title, description, completed } = req.body;
+
     Todo.findById(req.params.id)
         .then(todo => {
             if (!todo) {
                 return res.status(404).json('Todo not found');
             }
 
-            todo.completed = req.body.completed; // Uppdatera `completed`-fältet
+            // Uppdatera de fält som skickats i begäran
+            if (title !== undefined) todo.title = title;
+            if (description !== undefined) todo.description = description;
+            if (completed !== undefined) todo.completed = completed;
+
+            /*todo.completed = req.body.completed; // Uppdatera `completed`-fältet*/
 
             // Lägg till andra fält som du vill uppdatera här om det behövs
             todo.save()
-                .then(() => res.json(todo))
+                /*.then(() => res.json(todo))*/
+                .then(updatedTodo => res.json(updatedTodo))
                 .catch(err => res.status(400).json('Error: ' + err));
         })
         .catch(err => res.status(400).json('Error: ' + err));

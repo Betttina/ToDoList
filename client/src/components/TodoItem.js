@@ -2,10 +2,19 @@ import React, {useState} from 'react';
 import './styles/_todoitem.scss';
 import { formatDateToStockholm } from '../utils/dateUtils';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
+import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
+/*
+import { handleSave } from '../services/api';
+*/
 
 function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
+
+    const [isEditing, setIsEditing] = useState(false); // edit-mode
+    const [title, setTitle] = useState(todo.title);
+    const [description, setDescription] = useState(todo.description);
+
 
     const [fadingOut, setFadingOut] = useState(false);
     /*const handleToggleComplete = () => {
@@ -19,6 +28,16 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         }, 500); // match this time with css-anim
     };
 
+    const handleEdit = () => {
+        setIsEditing(true); // activate edit-mode
+    };
+
+    const handleSaveClick = () => {
+        handleSave(todo._id, { title, description }); // func for saving edits
+        setIsEditing(false); // deactivate edit mode
+        onUpdateTodo(todo._id, { title, description }); // update after save
+    };
+
     const handleDelete = () => {
         onDeleteTodo(todo._id);
     };
@@ -27,16 +46,40 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
 
     return (
         <div className={`todo-item ${fadingOut ? 'fade-out' : ''}`}>
+            {isEditing ? (
+                <div>
+                    <input
+                    type="text"
+                    value={title}
+                    onChange={(e) => setTitle (e.target.value)}
+                    />
+                    <textarea
+                        value="description"
+                        onChange={(e) => setDescription(e.target.value)}
+                    />
+
+                    <button onClick={handleSaveClick}>Save</button>
+                </div>
+            ) : (
+                // if not in edit-mode, display regular todo-layout
+            <div>
             <h2 className={`todo-title ${todo.completed ? 'completed' : ''}`}>
-                {todo.title}
+                {title}
             </h2>
-            <p>{todo.description}</p>
+            <p>{description}</p>
             <p>Skapad: {formattedDate}</p>
             <div className="todo-actions">
-                <button onClick={handleToggleComplete}>
+                <button onClick={handleToggleComplete}> // knapp för växling av fulländad-status
                     <CheckCircleIcon className="check-icon" />
                     {todo.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
                 </button>
+
+                <Tooltip title="Redigera uppgift" arrow>
+                    <button onClick={handleEdit}>
+                        <EditIcon className="edit-icon"/>
+                    </button>
+                </Tooltip>
+
                 <Tooltip title="Ta bort uppgift" arrow>
                 <button className="delete-button" onClick={handleDelete}>
                     <DeleteIcon className="delete-icon" />
@@ -44,7 +87,9 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
                 </Tooltip>
             </div>
         </div>
-    );
+    )}
+</div>
+);
 }
 
 export default TodoItem;
