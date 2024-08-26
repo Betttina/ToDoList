@@ -5,6 +5,7 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
+import {updateTodo} from "../services/api";
 /*
 import { handleSave } from '../services/api';
 */
@@ -32,10 +33,14 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         setIsEditing(true); // activate edit-mode
     };
 
-    const handleSaveClick = () => {
-        handleSave(todo._id, { title, description }); // func for saving edits
-        setIsEditing(false); // deactivate edit mode
-        onUpdateTodo(todo._id, { title, description }); // update after save
+    const handleSaveClick = async () => {
+        try {
+            await updateTodo(todo._id, {title, description}); // func for saving edits
+            onUpdateTodo(todo._id, {title, description}); // update after save
+            setIsEditing(false); // deactivate edit mode
+        } catch (error) {
+           console.error('Failed to save todo:', error);
+        }
     };
 
     const handleDelete = () => {
@@ -69,7 +74,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
             <p>{description}</p>
             <p>Skapad: {formattedDate}</p>
             <div className="todo-actions">
-                <button onClick={handleToggleComplete}> // knapp för växling av fulländad-status
+                <button onClick={handleToggleComplete}> {/*knapp för växling av fulländad-status*/}
                     <CheckCircleIcon className="check-icon" />
                     {todo.completed ? 'Mark as Incomplete' : 'Mark as Complete'}
                 </button>
