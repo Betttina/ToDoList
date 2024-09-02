@@ -6,21 +6,31 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import {updateTodo} from "../services/api";
+import Button from "@mui/material/Button";
 /*
 import { handleSave } from '../services/api';
 */
 
-function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
+function TodoItem({ todo, onDeleteTodo, onUpdate }) {
 
     const [isEditing, setIsEditing] = useState(false); // edit-mode
-    const [title, setTitle] = useState(todo.title);
-    const [description, setDescription] = useState(todo.description);
+    const [editedTitle, setEditedTitle] = useState(todo.title);
+    const [editedDescription, setEditedDescription] = useState(todo.description);
+
+    const handleEditClick = () => {
+        setIsEditing(true);
+    };
+
+    const handleSaveClick = () => {
+        setIsEditing(false);
+        onUpdate(todo._id, { title: editedTitle, description: editedDescription });
+    };
 
 
-    const [fadingOut, setFadingOut] = useState(false);
-    /*const handleToggleComplete = () => {
+    /*const [fadingOut, setFadingOut] = useState(false);
+    /!*const handleToggleComplete = () => {
         onUpdateTodo(todo._id);
-    };*/
+    };*!/
 
     const handleToggleComplete = () => {
         setFadingOut(true); // start anim
@@ -33,7 +43,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         setIsEditing(true); // activate edit-mode
     };
 
-    /*const handleSaveClick = async () => {
+    /!*const handleSaveClick = async () => {
         try {
             await updateTodo(todo._id, {title, description}); // func for saving edits
             onUpdateTodo(todo._id, {title, description}); // update after save
@@ -41,7 +51,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         } catch (error) {
            console.error('Failed to save todo:', error);
         }
-    };*/
+    };*!/
 
 
     const handleSaveClick = async () => {
@@ -59,7 +69,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         } catch (error) {
             console.error('Failed to save the todo:', error);
         }
-    };
+    };*/
 
 
     const handleDelete = () => {
@@ -75,18 +85,26 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
                     <input
                     type="text"
                     value={title}
-                    onChange={(e) => setTitle (e.target.value)}
+                    onChange={(e) => setEditedTitle (e.target.value)}
                     />
                     <textarea
                         value="description"
-                        onChange={(e) => setDescription(e.target.value)}
+                        onChange={(e) => setEditedDescription(e.target.value)}
                     />
 
                     <button onClick={handleSaveClick}>Save</button>
                 </div>
             ) : (
+
                 // if not in edit-mode, display regular todo-layout
             <div>
+
+                <>
+                    <h3>{todo.title}</h3>
+                    <p>{todo.description}</p>
+                    <Button onClick={handleEditClick}>Edit</Button>
+                </>
+
             <h2 className={`todo-title ${todo.completed ? 'completed' : ''}`}>
                 {title}
             </h2>

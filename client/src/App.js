@@ -25,7 +25,8 @@ function App() {
         const todosFromServer = await getTodos();
         setTodos(todosFromServer);
     };
-    useEffect(() => {
+
+        useEffect(() => {
         fetchTodos();
     }, []);
 

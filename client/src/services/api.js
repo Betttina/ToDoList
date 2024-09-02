@@ -39,7 +39,7 @@ export const deleteTodo = async (id) => {
 };
 
 // UPDATE ITEM BASED ON ID
-export const updateTodo = async (id, updates) => {
+/*export const updateTodo = async (id, updates) => {
     try {
         const response = await fetch(`${API_URL}/update/${id}`, {
             method: 'POST',
@@ -58,7 +58,30 @@ export const updateTodo = async (id, updates) => {
         console.error('Error details:', error);
         throw error;
     }
+};*/
+
+export const updateTodo = async (id, updatedTodo) => {
+    try {
+        const response = await fetch(`/api/todos/${id}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(updatedTodo),
+        });
+
+        if (!response.ok) {
+            throw new Error('Failed to update todo');
+        }
+
+        const updatedData = await response.json();
+        return updatedData;
+    } catch (error) {
+        console.error('Error updating todo:', error);
+        throw error;
+    }
 };
+
 
 
 /*export const handleSave = async (id, updatedData) => {
