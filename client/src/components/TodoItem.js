@@ -33,7 +33,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         setIsEditing(true); // activate edit-mode
     };
 
-    const handleSaveClick = async () => {
+    /*const handleSaveClick = async () => {
         try {
             await updateTodo(todo._id, {title, description}); // func for saving edits
             onUpdateTodo(todo._id, {title, description}); // update after save
@@ -41,7 +41,26 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         } catch (error) {
            console.error('Failed to save todo:', error);
         }
+    };*/
+
+
+    const handleSaveClick = async () => {
+        try {
+            console.log('Sending update request for:', todo._id);
+            console.log('Data being sent:', { title, description });
+            console.log('Saving todo:', todo._id, { title, description }); // Logga data som skickas
+
+            const updatedTodo = await updateTodo(todo._id, { title, description });
+
+            console.log('Updated todo from server:', updatedTodo); // Logga svaret från servern
+
+            onUpdateTodo(todo._id, updatedTodo); // Uppdatera state med den nya objektet
+            setIsEditing(false); // Deaktivera redigeringsläge
+        } catch (error) {
+            console.error('Failed to save the todo:', error);
+        }
     };
+
 
     const handleDelete = () => {
         onDeleteTodo(todo._id);
@@ -90,6 +109,10 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
                     <DeleteIcon className="delete-icon" />
                 </button>
                 </Tooltip>
+
+                <button onClick={() => setIsEditing(true)}>✏️</button> {/* Redigeringsknapp */}
+
+
             </div>
         </div>
     )}

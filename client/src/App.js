@@ -36,12 +36,27 @@ function App() {
         setTodos(prevTodos => [...prevTodos, newTodo]);
     };
 
-    const handleToggleComplete = async (id) => {
+    /*const handleToggleComplete = async (id) => {
         const todoToUpdate = todos.find(todo => todo._id === id);
         const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
         // Uppdatera todo i backend och sedan i state
         setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodo : todo));
+    };*/
+
+    const handleToggleComplete = async (id) => {
+        const todoToUpdate = todos.find(todo => todo._id === id);
+        const updatedTodo = { ...todoToUpdate, completed: !todoToUpdate.completed };
+
+        try {
+            // Uppdatera todo i backend först
+            const updatedTodoFromServer = await updateTodo(id, { completed: updatedTodo.completed });
+            // Uppdatera sedan state i frontend
+            setTodos(prevTodos => prevTodos.map(todo => todo._id === id ? updatedTodoFromServer : todo));
+        } catch (error) {
+            console.error('Failed to toggle complete status:', error);
+        }
     };
+
 
     const handleDeleteTodo = async (id) => {
         await deleteTodoApi(id);

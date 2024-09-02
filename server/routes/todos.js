@@ -66,31 +66,90 @@ router.route('/:id').delete((req, res) => {
 });*/
 
 // Route för att uppdatera en to-do baserat på dess ID
-router.post('/update/:id', (req, res) => {
+/*router.post('/update/:id', (req, res) => {
 
     console.log('Received POST request to update todo with ID:', req.params.id);
+    console.log('Data received for update:', req.body);
+
     const { title, description, completed } = req.body;
 
     Todo.findById(req.params.id)
         .then(todo => {
             if (!todo) {
+                console.log('Todo not found:', req.params.id);
                 return res.status(404).json('Todo not found');
             }
+
+            console.log('Found todo for update:', todo);
 
             // Uppdatera de fält som skickats i begäran
             if (title !== undefined) todo.title = title;
             if (description !== undefined) todo.description = description;
             if (completed !== undefined) todo.completed = completed;
 
-            /*todo.completed = req.body.completed; // Uppdatera `completed`-fältet*/
+            /!*todo.completed = req.body.completed; // Uppdatera `completed`-fältet*!/
 
             // Lägg till andra fält som du vill uppdatera här om det behövs
-            todo.save()
-                /*.then(() => res.json(todo))*/
+            /!*todo.save()
+                /!*.then(() => res.json(todo))*!/
                 .then(updatedTodo => res.json(updatedTodo))
-                .catch(err => res.status(400).json('Error: ' + err));
+                .catch(err => res.status(400).json('Error: ' + err));*!/
+
+            todo.save()
+                .then(updatedTodo => {
+                    console.log('Successfully updated todo:', updatedTodo); // Logga den uppdaterade posten
+                    res.json(updatedTodo);
+                })
+                .catch(err => {
+                    console.error('Error saving todo:', err); // Logga fel vid sparande
+                    res.status(400).json('Error: ' + err);
+                });
+
         })
-        .catch(err => res.status(400).json('Error: ' + err));
+        /!*.catch(err => res.status(400).json('Error: ' + err));*!/
+        .catch(err => {
+            console.error('Error finding todo:', err); // Logga fel vid sökning
+            res.status(400).json('Error: ' + err);
+        });
+});*/
+
+router.post('/update/:id', async (req, res) => {
+    const { title, description, completed } = req.body;
+
+    console.log('Received POST request to update todo with ID:', req.params.id);
+    console.log('Data received for update:', req.body); // Logga inkommande uppdateringsdata
+
+    try {
+        // Hitta to-do-posten baserat på ID
+        const todo = await Todo.findById(req.params.id);
+
+        if (!todo) {
+            console.log('Todo not found with ID:', req.params.id); // Logga om ingen to-do hittades
+            return res.status(404).json('Todo not found');
+        }
+
+        console.log('Found todo for update:', todo); // Logga den hittade posten
+
+        // Uppdatera fälten
+        if (title !== undefined) {
+            todo.title = title;
+        }
+        if (description !== undefined) {
+            todo.description = description;
+        }
+        if (completed !== undefined) {
+            todo.completed = completed;
+        }
+
+        // Spara den uppdaterade to-do-posten
+        const updatedTodo = await todo.save();
+        console.log('Successfully updated todo:', updatedTodo); // Logga den uppdaterade posten
+        res.json(updatedTodo);
+
+    } catch (err) {
+        console.error('Error processing update:', err); // Logga eventuella fel
+        res.status(400).json('Error: ' + err);
+    }
 });
 
 router.post('/update/:id', (req, res) => {
