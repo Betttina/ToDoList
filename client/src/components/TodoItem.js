@@ -5,17 +5,19 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
-import {updateTodo} from "../services/api";
+/*import {updateTodo} from "../services/api";*/
 import Button from "@mui/material/Button";
 /*
 import { handleSave } from '../services/api';
 */
 
-function TodoItem({ todo, onDeleteTodo, onUpdate }) {
+function TodoItem({ title, description, todo, onDeleteTodo, onUpdate }) {
 
     const [isEditing, setIsEditing] = useState(false); // edit-mode
-    const [editedTitle, setEditedTitle] = useState(todo.title);
-    const [editedDescription, setEditedDescription] = useState(todo.description);
+    const [editedTitle, setEditedTitle] = useState(todo.title || '');
+    const [editedDescription, setEditedDescription] = useState(todo.description || '');
+
+    console.log('Rendering TodoItem with:', todo);
 
     const handleEditClick = () => {
         setIsEditing(true);
@@ -26,8 +28,18 @@ function TodoItem({ todo, onDeleteTodo, onUpdate }) {
         onUpdate(todo._id, { title: editedTitle, description: editedDescription });
     };
 
+    const handleEdit = () => {
+        setIsEditing(true); // activate edit-mode
+    };
 
-    /*const [fadingOut, setFadingOut] = useState(false);
+    const handleToggleComplete = () => {
+        // Logik för att markera en todo som färdig eller inte
+    };
+
+    const [fadingOut, setFadingOut] = useState(false);
+
+
+    /*
     /!*const handleToggleComplete = () => {
         onUpdateTodo(todo._id);
     };*!/
@@ -39,9 +51,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdate }) {
         }, 500); // match this time with css-anim
     };
 
-    const handleEdit = () => {
-        setIsEditing(true); // activate edit-mode
-    };
+
 
     /!*const handleSaveClick = async () => {
         try {

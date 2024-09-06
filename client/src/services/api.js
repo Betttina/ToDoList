@@ -1,9 +1,23 @@
 const API_URL = 'http://localhost:5000/todos';
 
 // get all
-export const getTodos = async () => {
+/*export const getTodos = async () => {
     const response = await fetch(API_URL);
     return await response.json();
+};*/
+
+export const getTodos = async () => {
+    try {
+        const response = await fetch(API_URL);
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const data = await response.json();
+        return data;
+    } catch (error) {
+        console.error('Error fetching todos:', error);
+        throw error; // Återkasta felet så att anroparen kan hantera det
+    }
 };
 
 export const addTodo = async (todo) => {

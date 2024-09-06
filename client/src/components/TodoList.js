@@ -1,7 +1,7 @@
 import /*React, */{useEffect, useState} from 'react';
 import TodoItem from './TodoItem';
 import './styles/_todolist.scss';
-import {updateTodo} from "../services/api";
+import {getTodos, updateTodo} from "../services/api";
 
 /*function TodoList({ todos = [], filter, onDeleteTodo, onUpdateTodo }) {
     let filteredTodos;
@@ -38,10 +38,28 @@ export default TodoList;*/
 const TodoList = () => {
     const [todos, setTodos] = useState([]);
 
+   /* useEffect(() => {
+        // hämta todo-listan från servern
+        fetch('/api/todos')
+            .then(response => response.json())
+            .then(data => {
+                setTodos(data); // Uppdatera state med hämtade todo-objekt
+                console.log('Hämtade todos:', data); //  se vad som hämtas
+            })
+            .catch(error => console.error('Error fetching todos:', error));
+    }, []);*/
+
+
+
+    const fetchTodos = async () => {
+        const todosFromServer = await getTodos();
+        setTodos(todosFromServer);
+    };
+
     useEffect(() => {
-        // Här kan du göra ett API-anrop för att hämta alla todos
-        fetch('/api/todos').then(response => response.json()).then(data => setTodos(data));
+        fetchTodos();
     }, []);
+
 
     const handleUpdate = async (id, updatedTodo) => {
         try {
@@ -57,9 +75,13 @@ const TodoList = () => {
 
     return (
         <div>
-            {todos.map(todo => (
-                <TodoItem key={todo._id} todo={todo} onUpdate={handleUpdate} />
-            ))}
+            {todos.length === 0 ? (
+                <p>Inga todo-poster att visa</p>
+            ) : (
+                todos.map(todo => (
+                    <TodoItem key={todo._id} todo={todo} onUpdate={handleUpdate} />
+                ))
+            )}
         </div>
     );
 };

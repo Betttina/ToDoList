@@ -1,11 +1,22 @@
 const router = require('express').Router();
 const Todo = require('../models/todo.model');
 
-// get all posts
+/*// get all posts
 router.route('/').get((req, res) => {
     Todo.find()
         .then(todos => res.json(todos))
         .catch(err => res.status(400).json('Error: ' + err));
+});*/
+
+router.route('/').get((req, res) => {
+    Todo.find()
+        .then(todos => {
+            res.json(todos);
+        })
+        .catch(err => {
+            console.error('Error fetching todos:', err); // Logga felet i serverkonsolen
+            res.status(400).json('Error: ' + err);
+        });
 });
 
 // create a new post

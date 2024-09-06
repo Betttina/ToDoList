@@ -13,11 +13,20 @@ const uri = 'mongodb://localhost:27017/todolist';
 mongoose.connect(uri);
 
 const connection = mongoose.connection;
+/*
 mongoose.connect(uri, { useNewUrlParser: true, useUnifiedTopology: true });
+*/
 
 connection.once('open', () => {
     console.log('MongoDB database connection established successfully');
 });
+
+// Global error handling middleware
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).send('Something broke!');
+});
+
 
 
 // import todos
