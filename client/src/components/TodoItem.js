@@ -6,22 +6,29 @@ import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import {updateTodo} from "../services/api";
+import TextField from "@mui/material/TextField";
+import {IconButton} from "@mui/material";
+import Button from "@mui/material/Button";
 /*
 import { handleSave } from '../services/api';
 */
+
+function SaveIcon() {
+    return null;
+}
 
 function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
 
     const [isEditing, setIsEditing] = useState(false); // edit-mode
     const [title, setTitle] = useState(todo.title);
     const [description, setDescription] = useState(todo.description);
-
-
     const [fadingOut, setFadingOut] = useState(false);
     /*const handleToggleComplete = () => {
         onUpdateTodo(todo._id);
     };*/
 
+
+    // when user marks post as "complete"
     const handleToggleComplete = () => {
         setFadingOut(true); // start anim
         setTimeout(() => { // delays to do-status until anim is done
@@ -53,17 +60,29 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         <div className={`todo-item ${fadingOut ? 'fade-out' : ''}`}>
             {isEditing ? (
                 <div>
-                    <input
+                    <TextField
                     type="text"
+                    label="titel"
+                    margin="normal"
                     value={title}
+                    defaultValue=""
                     onChange={(e) => setTitle (e.target.value)}
                     />
-                    <textarea
-                        value="description"
+                    <TextField
+                        value={description}
+                        label="beskrivning"
+                        margin="normal"
+                        fullWidth
                         onChange={(e) => setDescription(e.target.value)}
                     />
 
                     <button onClick={handleSaveClick}>Save</button>
+
+                    <Button startIcon={<SaveIcon />}>Spara</Button>
+
+                    <IconButton aria-label="delete" className="bla">
+                        <DeleteIcon fontSize="small" />
+                    </IconButton>
                 </div>
             ) : (
                 // if not in edit-mode, display regular todo-layout
