@@ -9,6 +9,7 @@ import {updateTodo} from "../services/api";
 import TextField from "@mui/material/TextField";
 import {IconButton, ListItemText, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
+import {DatePicker} from "@mui/x-date-pickers";
 /*
 import { handleSave } from '../services/api';
 */
@@ -23,7 +24,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
     const [title, setTitle] = useState(todo.title);
     const [description, setDescription] = useState(todo.description);
     const [fadingOut, setFadingOut] = useState(false);
-    const [dueDate, setDueDate] = useState(todo.dueDate ? new Date(todo.dueDate).toISOString().substring(0, 10) : '');
+    /*const [dueDate, setDueDate] = useState(todo.dueDate ? new Date(todo.dueDate).toISOString().substring(0, 10) : '');*/
 
     /*const handleToggleComplete = () => {
         onUpdateTodo(todo._id);
@@ -95,13 +96,12 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
                         onChange={(e) => setDescription(e.target.value)}
                     />
 
-                    <input
-                        type="date"
+                    <DatePicker
+                        label="Deadline"
                         value={dueDate}
-                        onChange={(e) => setDueDate(e.target.value)}
+                        onChange={(date) => setDueDate(date)} // Uppdatera deadline
+                        renderInput={(params) => <TextField {...params} fullWidth margin="normal" />}
                     />
-
-                    <button onClick={handleSaveClick}>Save</button>
 
                     <Button startIcon={<SaveIcon />}>Spara</Button>
 
