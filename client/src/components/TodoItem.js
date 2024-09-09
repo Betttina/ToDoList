@@ -7,7 +7,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import Tooltip from '@mui/material/Tooltip';
 import {updateTodo} from "../services/api";
 import TextField from "@mui/material/TextField";
-import {IconButton} from "@mui/material";
+import {IconButton, ListItemText, Typography} from "@mui/material";
 import Button from "@mui/material/Button";
 /*
 import { handleSave } from '../services/api';
@@ -23,6 +23,8 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
     const [title, setTitle] = useState(todo.title);
     const [description, setDescription] = useState(todo.description);
     const [fadingOut, setFadingOut] = useState(false);
+    const [dueDate, setDueDate] = useState(todo.dueDate ? new Date(todo.dueDate).toISOString().substring(0, 10) : '');
+
     /*const handleToggleComplete = () => {
         onUpdateTodo(todo._id);
     };*/
@@ -40,7 +42,7 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         setIsEditing(true); // activate edit-mode
     };
 
-    const handleSaveClick = async () => {
+    /*const handleSaveClick = async () => {
         try {
             await updateTodo(todo._id, {title, description}); // func for saving edits
             onUpdateTodo(todo._id, {title, description}); // update after save
@@ -48,7 +50,24 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
         } catch (error) {
            console.error('Failed to save todo:', error);
         }
+    };*/
+
+    const handleSaveClick = async () => {
+        try {
+            const updatedTodo = {
+                title,
+                description,
+                dueDate, // Se till att dueDate skickas
+            };
+
+            await updateTodo(todo._id, updatedTodo); // Uppdatera todo i backend
+            onUpdateTodo(todo._id, updatedTodo); // Uppdatera state i frontend
+            setIsEditing(false); // Avsluta redigeringsläget
+        } catch (error) {
+            console.error('Failed to save todo:', error);
+        }
     };
+
 
     const handleDelete = () => {
         onDeleteTodo(todo._id);
@@ -76,6 +95,12 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
                         onChange={(e) => setDescription(e.target.value)}
                     />
 
+                    <input
+                        type="date"
+                        value={dueDate}
+                        onChange={(e) => setDueDate(e.target.value)}
+                    />
+
                     <button onClick={handleSaveClick}>Save</button>
 
                     <Button startIcon={<SaveIcon />}>Spara</Button>
@@ -92,6 +117,22 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
             </h2>
             <p>{description}</p>
             <p>Skapad: {formattedDate}</p>
+                <ListItemText
+                    primary={todo.title}
+                    secondary={
+                        <>
+                            <Typography component="span" variant="body2">{todo.description}</Typography>
+                            <br />
+                            {todo.createdAt && `Skapad: ${formatDateToStockholm(todo.createdAt)}`}
+                            {todo.dueDate && (
+                                <>
+                                    <br />
+                                    Deadline: {formatDateToStockholm(todo.dueDate)}
+                                </>
+                            )}
+                        </>
+                    }
+                />
             <div className="todo-actions">
                 <button onClick={handleToggleComplete}> {/*knapp för växling av fulländad-status*/}
                     <CheckCircleIcon className="check-icon" />
