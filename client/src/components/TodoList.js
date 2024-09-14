@@ -284,7 +284,27 @@ const TodoList = ({ todos, onToggleComplete, onDeleteTodo, onUpdateTodo }) => {
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <Box sx={{ maxWidth: 600, margin: 'auto', padding: 2, backgroundColor: '#f5f5f5', borderRadius: 2, boxShadow: '0 2px 4px rgba(0,0,0,0.1)' }}>
+
+
                 <Typography variant="h4" sx={{ color: '#365F62', marginBottom: 2 }}>Todo List</Typography>
+
+                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
+                    {['all', 'active', 'completed'].map((f) => (
+                        <Button
+                            key={f}
+                            onClick={() => setFilter(f)}
+                            sx={{
+                                marginX: 1,
+                                backgroundColor: filter === f ? '#365F62' : 'transparent',
+                                color: filter === f ? 'white' : '#365F62',
+                                '&:hover': { backgroundColor: filter === f ? '#2a4b4d' : 'rgba(54, 95, 98, 0.1)' }
+                            }}
+                        >
+                            {f.charAt(0).toUpperCase() + f.slice(1)}
+                        </Button>
+                    ))}
+                </Box>
+
                 <List>
                     {filteredTodos.map((todo) => (
                         <ListItem key={todo._id} sx={{ backgroundColor: 'white', marginBottom: 1, borderRadius: 1 }}>
@@ -343,22 +363,7 @@ const TodoList = ({ todos, onToggleComplete, onDeleteTodo, onUpdateTodo }) => {
                         </ListItem>
                     ))}
                 </List>
-                <Box sx={{ display: 'flex', justifyContent: 'center', marginTop: 2 }}>
-                    {['all', 'active', 'completed'].map((f) => (
-                        <Button
-                            key={f}
-                            onClick={() => setFilter(f)}
-                            sx={{
-                                marginX: 1,
-                                backgroundColor: filter === f ? '#365F62' : 'transparent',
-                                color: filter === f ? 'white' : '#365F62',
-                                '&:hover': { backgroundColor: filter === f ? '#2a4b4d' : 'rgba(54, 95, 98, 0.1)' }
-                            }}
-                        >
-                            {f.charAt(0).toUpperCase() + f.slice(1)}
-                        </Button>
-                    ))}
-                </Box>
+
             </Box>
         </LocalizationProvider>
     );

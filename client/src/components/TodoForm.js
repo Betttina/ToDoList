@@ -93,13 +93,14 @@ function TodoForm({ onTodoAdded }) {
     const handleSubmit = (e) => {
         e.preventDefault();
 
+        // sends this data when creating a new todo
         const newTodo = {
             title,
             description,
-            dueDate, // Skicka deadline när du skapar en ny todo
+            dueDate,
         };
 
-        // Skicka till backend
+        // send to backend
         addTodo(newTodo).then(() => {
             // Reset form fields om det behövs
             setTitle('');
@@ -204,13 +205,14 @@ function TodoForm({ onTodoAdded }) {
                         <DatePicker
                             label="Deadline"
                             value={dueDate}
-                            onChange={(date) => setDueDate(date)} // Uppdatera datumet
+                            onChange={(date) => setDueDate(date)}
                             renderInput={(params) => <TextField {...params} fullWidth margin="normal"/>}
                         />
                         <Button
                             variant="contained"
                             color="primary"
                             type="submit"
+                            sx={{ marginTop: '0.6rem' }}
                         >
                             Lägg till
                         </Button>

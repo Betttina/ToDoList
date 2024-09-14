@@ -1,4 +1,4 @@
-.todo-form-container {
+/*.todo-form-container {
   max-width: 500px;
   margin: 0 auto;
   padding: 2rem;
@@ -24,4 +24,50 @@
   @media (max-width: 600px) {
     padding: 1rem;
   }
+}*/
+
+
+.todo-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 2rem; // Mellanrum mellan form och listan
+  padding: 2rem;
+
+  @media (max-width: 900px) {
+    flex-direction: column;
+    gap: 1rem;
+    max-width:100%;
+  }
 }
+
+.todo-form-container {
+  flex: 1; // Ger form ungefär lika mycket utrymme som listan
+  max-width: 400px;
+  margin: 2rem;
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.05);
+  background-color: #f9f9f9;
+}
+
+
+
+
+
+.MuiButton-root {
+  transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:hover {
+    background-color: darken(#365F62, 10%);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  }
+}
+
+.MuiTextField-root {
+  transition: border-color 0.3s ease;
+  &:focus-within {
+    border-color: #365F62;
+  }
+}
+
+
+

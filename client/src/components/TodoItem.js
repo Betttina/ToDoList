@@ -75,6 +75,10 @@ function TodoItem({ todo, onDeleteTodo, onUpdateTodo }) {
     };
 
     const formattedDate = formatDateToStockholm(todo.createdAt);
+/*
+    const formattedDueDate = todo.dueDate ? formatDateToStockholm(todo.dueDate) : 'Ingen deadline satt';
+*/
+
 
     return (
         <div className={`todo-item ${fadingOut ? 'fade-out' : ''}`}>
