@@ -1,14 +1,22 @@
 .todo-item {
-  background-color: #f5f5f5;
+  /*background-color: #f5f5f5;
   border-left: 4px solid #365F62;
   padding: 1rem;
   margin-bottom: 1rem;
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  /*transition: transform 0.2s ease, box-shadow 0.2s ease;*/
+  !*transition: transform 0.2s ease, box-shadow 0.2s ease;*!
   font-size: 0.9rem;
-  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;*/
 
+
+  background-color: #f9f9f9;
+  padding: 1rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  min-width: 0;  // Förhindra att element breddar grid-kolumnerna
+
+  
   &:hover {
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   }

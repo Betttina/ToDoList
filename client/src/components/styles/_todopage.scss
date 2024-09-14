@@ -1,0 +1,41 @@
+/* ---TODO PAGE ---- */
+
+.todo-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 2rem;
+  width: 100%;  // make sure it takes up the whole width
+}
+
+.todo-form-container {
+  flex: 1;
+  max-width: 400px;
+  margin-right: 2rem;  // space between form and list
+}
+
+/* Todo-list comp */
+.css-13vgab9 {
+  width: 1400px;
+  margin: auto;
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 16px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.MuiList-root {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+}
+
+@media (max-width: 600px) {
+  .MuiList-root {
+    grid-template-columns: 1fr;
+  }
+}
+
+
+

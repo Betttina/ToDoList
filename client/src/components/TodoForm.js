@@ -180,7 +180,7 @@ function TodoForm({ onTodoAdded }) {
 
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <Box className="todo-form-container">
+            <Box className="todo-form-wrapper">
                 <form onSubmit={handleSubmit} className="todo-form">
                     <Paper elevation={4} style={{padding: '2rem'}}>
                         <Typography variant="h6" gutterBottom>Lägg till en ny uppgift: </Typography>
