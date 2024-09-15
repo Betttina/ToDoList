@@ -3,10 +3,10 @@ import { createTheme } from '@mui/material/styles';
 const theme = createTheme({
     palette: {
         primary: {
-            main: '#365F62', // Accentfärgen för primära element
+            main: '#365F62',
         },
         secondary: {
-            main: '#f5f5f5', // En ljus sekundärfärg för kontrast
+            main: '#f5f5f5',
         },
     },
     typography: {
@@ -19,7 +19,7 @@ const theme = createTheme({
         },
     },
     shape: {
-        borderRadius: 8, // Mjukare hörn på komponenter
+        borderRadius: 8,
     },
 });
 

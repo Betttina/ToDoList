@@ -1,17 +1,22 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import { ThemeProvider } from '@mui/material/styles';
 import Header from './components/Header';
 import TodoPage from './components/TodoPage';
 import Footer from './components/Footer';
 import './App.scss';
+import theme from './theme';
 
 
 function App() {
 
 
     return (
+        <ThemeProvider theme={theme}>
+            <div className="todo-app">
+
         <Router>
-            <div className="App">
+            <div className="TodoApp">
                 <Header />
 
                 <Routes>
@@ -21,6 +26,9 @@ function App() {
                 <Footer />
             </div>
         </Router>
+
+                </div>
+        </ThemeProvider>
     );
 }
 
